@@ -56,9 +56,7 @@ app.get('/api/v2/joyas', (req, res) => {
 // Ejemplo para prueba: http://localhost:3000/api/v2/categorias/anillo
 app.get('/api/v2/categorias/:categoria', (req, res) => {
   const { categoria } = req.params;
-  const filteredJewels = {
-    ...results.filter((item) => item.category == categoria),
-  };
+  const filteredJewels = results.filter((item) => item.category == categoria);
   return res.json(filteredJewels);
 });
 
@@ -68,16 +66,16 @@ app.get('/api/v2/joyas/:id', (req, res) => {
   const { id } = req.params;
   const jewel = results.find((item) => item.id == id);
 
-  // Crear una ruta que devuelva como payload un JSON con un mensaje de error cuando el usuario consulte el id de una joya que no exista.
+  // 5. Crear una ruta que devuelva como payload un JSON con un mensaje de error cuando el usuario consulte el id de una joya que no exista.
   //Ejemplo para prueba: http://localhost:3000/api/v2/joyas/7
   if (!jewel) {
     return res.status(404).json({ msg: `No existe una joya con el id ${id}` });
   }
-
   const { fields } = req.query;
+  const jewelCopy = { ...jewel };
   if (!fields) return res.json(jewel);
   const arrayOfFields = fields.split(',');
-  for (let prop in jewel) {
+  for (let prop in jewelCopy) {
     if (!arrayOfFields.includes(prop)) delete jewel[prop];
   }
   return res.json(jewel);
