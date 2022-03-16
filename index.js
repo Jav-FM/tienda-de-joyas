@@ -56,7 +56,9 @@ app.get('/api/v2/joyas', (req, res) => {
 // Ejemplo para prueba: http://localhost:3000/api/v2/categorias/anillo
 app.get('/api/v2/categorias/:categoria', (req, res) => {
   const { categoria } = req.params;
-  const filteredJewels = results.filter((item) => item.category == categoria);
+  const filteredJewels = {
+    ...results.filter((item) => item.category == categoria),
+  };
   return res.json(filteredJewels);
 });
 
