@@ -3,7 +3,7 @@ const { results } = require('./data/joyas');
 const app = express();
 
 // 1. Crear una ruta para la devolución de todas las joyas aplicando HATEOAS.
-const HETOASV1 = () => {
+const HATEOASV1 = () => {
   return results.map((item) => {
     return {
       name: item.name,
@@ -13,12 +13,12 @@ const HETOASV1 = () => {
 };
 
 app.get('/api/v1/joyas', (req, res) => {
-  return res.json(HETOASV1());
+  return res.json(HATEOASV1());
 });
 
 // 2. Hacer una segunda versión de la API que ofrezca los mismos datos pero con los nombres de las propiedades diferentes.
 
-const HETOASV2 = () => {
+const HATEOASV2 = () => {
   return results.map((item) => {
     return {
       jewel: item.name,
@@ -29,7 +29,7 @@ const HETOASV2 = () => {
 
 app.get('/api/v2/joyas', (req, res) => {
   const { order, page } = req.query;
-  const jewelsWithUrls = HETOASV2();
+  const jewelsWithUrls = HATEOASV2();
 
   //6. Permitir hacer paginación de las joyas usando Query Strings.
   //Ejemplo para prueba: http://localhost:3000/api/v2/joyas?page=1
